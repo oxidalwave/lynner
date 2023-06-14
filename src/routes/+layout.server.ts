@@ -1,12 +1,7 @@
 import type { LayoutServerLoad } from './$types';
 
 export async function load(event) {
-	const channels = [
-		// load from user
-		{ name: 'NFL', server: 'localhost', icon: '', label: 'NFL' },
-		{ name: 'MLB', server: 'localhost', icon: '', label: 'MLB' },
-		{ name: 'Games', server: 'localhost', icon: '', label: 'Games' }
-	];
+	const channels = fetch('http://localhost:5173/api/channels').then((r) => r.json());
 
 	return {
 		channels,
