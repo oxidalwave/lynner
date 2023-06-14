@@ -1,18 +1,26 @@
 import prisma from '$lib/client.js';
 
 export const GET = async ({ params }) => {
-  const { boardCode, channelCode } = params;
-  
-  // TODO: I don't like how this is two statements. There's gotta be a way to fix this.
-	const channel = await prisma.channel.findUnique({ where: { code: channelCode } });
+	const { boardCode, channelCode } = params;
 
-	if (channel) {
-		const board = await prisma.board.findUnique({
-			where: { channelId_code: { channelId: channel?.id, code: boardCode } }
-		});
+	const channel = await prisma.channel.findUnique({
+		where: { code: channelCode },
+		include: {
+			boards: {
+				where: { code: boardCode }
+			}
+		}
+	});
 
-		return new Response(JSON.stringify(board));
+	if (!channel) {
+		return new Response(null, { status: 404 });
 	}
 
-	throw new Error('Channel not found');
+	const { boards } = channel;
+
+	if (boards.length > 0) {
+		return new Response(JSON.stringify(boards[0]));
+	}
+
+	return new Response(null, { status: 404 });
 };

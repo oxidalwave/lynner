@@ -6,18 +6,17 @@
 
 	let currentTile: number = 0;
 
-	export let channels: { name: string; server: string }[];
+	export let channels: { name: string; code: string }[];
 </script>
 
 <AppRail>
-	{#each channels as channel, i}
+	{#each channels as channel}
 		<AppRailAnchor
 			bind:group={currentTile}
-			selected={$page.params.channel === channel.name && $page.params.server === channel.server}
-			href={`/${channel.server}/${channel.name}/all`}
+			selected={$page.params.channel === channel.code}
+			href={`/${channel.code}/all`}
 			title={channel.name}
 		>
-			<span>{channel.server}</span>
 			<span>{channel.name}</span>
 		</AppRailAnchor>
 	{/each}

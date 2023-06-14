@@ -14,28 +14,16 @@
 	import Footer from '../components/nav/Footer.svelte';
 	import PageHeader from '../components/nav/PageHeader.svelte';
 
-	import { page } from '$app/stores';
-
-	let { server, channel } = $page.params;
-
 	/** @type {import('./$types').LayoutData} */
 	export let data;
 
 	let { channels } = data;
-
-	let boards = [
-		{ name: 'Arizona Cardinals', icon: '', label: 'ARI' },
-		{ name: 'Baltimore Ravens', icon: '', label: 'BAL' },
-		{ name: 'Chicago Bears', icon: '', label: 'CHI' },
-		{ name: 'Green Bay Packers', icon: '', label: 'GB' },
-		{ name: 'Minnesota Vikings', icon: '', label: 'MIN' }
-	];
 </script>
 
 <AppShell>
 	<svelte:fragment slot="header"><Header /></svelte:fragment>
 	<svelte:fragment slot="pageHeader">
-		<PageHeader {boards} />
+		<PageHeader />
 	</svelte:fragment>
 	<svelte:fragment slot="sidebarLeft"><SidebarLeft {channels} /></svelte:fragment>
 	<svelte:fragment slot="sidebarRight"><SidebarRight /></svelte:fragment>
