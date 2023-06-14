@@ -4,7 +4,7 @@
 	import { writable, type Writable } from 'svelte/store';
 	const tabSet: Writable<number> = writable(0);
 
-	export let boards: { name: string; icon: string; label: string }[];
+	export let boards: { name: string }[];
 </script>
 
 <TabGroup>
@@ -14,8 +14,7 @@
 	>
 	{#each boards as board, i}
 		<Tab bind:group={$tabSet} name={board.name} value={i + 1}>
-			<svelte:fragment slot="lead">{board.icon}</svelte:fragment>
-			{board.label}</Tab
+			{board.name}</Tab
 		>
 	{/each}
 </TabGroup>

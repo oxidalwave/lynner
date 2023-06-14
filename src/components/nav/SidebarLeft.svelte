@@ -2,10 +2,11 @@
 	import { AppRail, AppRailAnchor } from '@skeletonlabs/skeleton';
 
 	import { page } from '$app/stores';
+	import AppRailAvatar from './auth/AppRailAvatar.svelte';
 
 	let currentTile: number = 0;
 
-	export let channels: { name: string; server: string; icon: string; label: string }[];
+	export let channels: { name: string; server: string }[];
 </script>
 
 <AppRail>
@@ -16,8 +17,9 @@
 			href={`/${channel.server}/${channel.name}/all`}
 			title={channel.name}
 		>
-			<svelte:fragment slot="lead">{channel.icon}</svelte:fragment>
-			<span>{channel.label}</span>
+			<span>{channel.server}</span>
+			<span>{channel.name}</span>
 		</AppRailAnchor>
 	{/each}
+	<svelte:fragment slot="trail"><AppRailAvatar /></svelte:fragment>
 </AppRail>
