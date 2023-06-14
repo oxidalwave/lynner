@@ -69,7 +69,6 @@ model Channel {
   boards Board[]
 
   @@unique([code])
-  @@unique([name])
   @@index([code])
 }
 
@@ -83,10 +82,8 @@ model Board {
   channelId String
   posts      Post[]
 
-  @@unique([code])
-  @@unique([name])
-  @@index([code])
-  @@index([channelId])
+  @@unique([channelId, code])
+  @@index([channelId, code])
 }
 
 model Post {
