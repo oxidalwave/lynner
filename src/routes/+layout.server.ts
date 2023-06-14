@@ -1,4 +1,6 @@
-export async function load() {
+import type { LayoutServerLoad } from './$types';
+
+export async function load(event) {
 	const channels = [
 		// load from user
 		{ name: 'NFL', server: 'localhost', icon: '', label: 'NFL' },
@@ -7,6 +9,7 @@ export async function load() {
 	];
 
 	return {
-		channels
+		channels,
+		session: await event.locals.getSession()
 	};
 }
