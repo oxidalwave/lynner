@@ -7,3 +7,14 @@ export const GET = async ({ params }) => {
 
 	return new Response(JSON.stringify(boards));
 };
+
+export const POST = async ({ params, request }) => {
+	const { channelCode } = params;
+	const board = await request.json();
+
+	const createdBoard = await prisma.board.create({
+		data: { name: board.name, code: board.code, channel: { connect: { code: channelCode } } }
+	});
+
+	return new Response(JSON.stringify(createdBoard));
+};

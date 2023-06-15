@@ -9,7 +9,7 @@
 
 	export let channels: { name: string; code: string }[];
 
-	export let dialog;
+	let dialog: HTMLDialogElement;
 </script>
 
 <AppRail>

@@ -1,4 +1,6 @@
 <script lang="ts">
+	export let channelCode: string;
+
 	let name: string;
 	let icon: string;
 	let code: string;
@@ -9,7 +11,7 @@
 			icon,
 			code
 		};
-		fetch('/api/channels', { method: 'POST', body: JSON.stringify(payload) });
+		fetch(`/api/${channelCode}/boards`, { method: 'POST', body: JSON.stringify(payload) });
 	}
 </script>
 
@@ -17,5 +19,5 @@
 	<input class="input" type="text" placeholder="name" bind:value={name} />
 	<input class="input" type="text" placeholder="iconUrl" bind:value={icon} />
 	<input class="input" type="text" placeholder="code" bind:value={code} />
-	<button class="btn variant-filled" type="submit">Create Channel</button>
+	<button class="btn variant-filled" type="submit">Create Board</button>
 </form>
