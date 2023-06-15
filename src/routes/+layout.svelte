@@ -7,8 +7,8 @@
 	import '../app.postcss';
 
 	import { AppShell } from '@skeletonlabs/skeleton';
-	import Header from '../components/nav/Header.svelte';
-	import SidebarLeft from '../components/nav/SidebarLeft.svelte';
+	import Header from '$lib/components/nav/Header.svelte';
+	import SidebarLeft from '$lib/components/nav/SidebarLeft.svelte';
 
 	import type { LayoutData } from './$types';
 

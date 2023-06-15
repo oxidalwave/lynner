@@ -1,4 +1,5 @@
 import prisma from '$lib/client.js';
+import { boardValidator } from '$lib/validation/board.js';
 
 export const GET = async ({ params }) => {
 	const { channelCode } = params;
@@ -10,10 +11,18 @@ export const GET = async ({ params }) => {
 
 export const POST = async ({ params, request }) => {
 	const { channelCode } = params;
-	const board = await request.json();
+	const data = await request.json();
+
+	const board = boardValidator.parse({
+		name: data.name,
+		code: data.code,
+		channel: {
+			code: channelCode
+		}
+	});
 
 	const createdBoard = await prisma.board.create({
-		data: { name: board.name, code: board.code, channel: { connect: { code: channelCode } } }
+		data: { name: board.name, code: board.code, channel: { connect: { code: board.channel.code } } }
 	});
 
 	return new Response(JSON.stringify(createdBoard));

@@ -11,7 +11,7 @@
 			icon,
 			code
 		};
-		fetch(`/api/${channelCode}/boards`, { method: 'POST', body: JSON.stringify(payload) });
+		fetch(`/api/channels/${channelCode}/boards`, { method: 'POST', body: JSON.stringify(payload) });
 	}
 </script>
 

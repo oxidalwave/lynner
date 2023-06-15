@@ -1,5 +1,5 @@
 import prisma from '$lib/client.js';
-import { channelValidator } from '../../../validation/channel.js';
+import { channelValidator } from '$lib/validation/channel.js';
 
 export const GET = async () => {
 	const channels = await prisma.channel.findMany();

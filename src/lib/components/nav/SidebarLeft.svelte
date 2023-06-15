@@ -20,7 +20,7 @@
 		<AppRailAnchor
 			bind:group={currentTile}
 			selected={$page.params.channel === channel.code}
-			href={`/${channel.code}/all`}
+			href={`/channels/${channel.code}/all`}
 			title={channel.name}
 		>
 			<span>{channel.name}</span>
