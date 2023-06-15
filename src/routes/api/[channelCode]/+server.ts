@@ -1,5 +1,5 @@
 import prisma from '$lib/client.js';
-import { z } from 'zod';
+import { channelValidator } from '../../../validation/channel.js';
 
 export const GET = async ({ params }) => {
 	const { channelCode } = params;
@@ -10,13 +10,11 @@ export const GET = async ({ params }) => {
 };
 
 export const PUT = async ({ params, request }) => {
-	const channelValidator = z.object({
-		name: z.string(),
-		code: z.string().toLowerCase()
-	});
+	const data = await request.json();
+
 	const channel = await prisma.channel.update({
 		where: { code: params.channelCode },
-		data: channelValidator.parse(request.json())
+		data: channelValidator.parse(data)
 	});
 
 	return new Response(JSON.stringify(channel));
