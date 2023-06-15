@@ -8,6 +8,7 @@
 <AppShell>
 	<svelte:fragment slot="pageHeader">
 		<nav class="flex gap-2">
+			<a href={`/${data.channel}/all`}>All</a>
 			{#each data.boards as board}
 				<a href={`/${data.channel}/${board.code}`}>{board.name}</a>
 			{/each}
