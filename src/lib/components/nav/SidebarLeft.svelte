@@ -4,7 +4,7 @@
 	import { page } from '$app/stores';
 	import AppRailAvatar from './auth/AppRailAvatar.svelte';
 	import ChannelForm from '../channel/ChannelForm.svelte';
-
+	import FaPlus from 'svelte-icons/fa/FaPlus.svelte'
 	let currentTile: number = 0;
 
 	export let channels: { name: string; code: string }[];
@@ -13,9 +13,6 @@
 </script>
 
 <AppRail>
-	<AppRailAnchor on:click={() => dialog.showModal()}>
-		<span>Add</span>
-	</AppRailAnchor>
 	{#each channels as channel}
 		<AppRailAnchor
 			bind:group={currentTile}
@@ -26,6 +23,11 @@
 			<span>{channel.name}</span>
 		</AppRailAnchor>
 	{/each}
+	<AppRailAnchor on:click={() => dialog.showModal()}>
+		<div class="m-4 p-4 border-2 rounded-full">
+			<FaPlus />
+		</div>
+	</AppRailAnchor>
 	<svelte:fragment slot="trail"><AppRailAvatar /></svelte:fragment>
 </AppRail>
 
