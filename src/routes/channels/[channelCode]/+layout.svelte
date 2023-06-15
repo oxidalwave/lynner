@@ -10,15 +10,21 @@
 
 <AppShell>
 	<svelte:fragment slot="pageHeader">
-		<nav class="flex gap-2 overflow-x-scroll">
-			<a class="whitespace-nowrap" href={`/channels/${data.channel.code}/all`}>All</a>
-			{#each data.boards as board}
-				<a class="whitespace-nowrap" href={`/channels/${data.channel.code}/boards/${board.code}`}>{board.name}</a>
-			{/each}
+		<nav class="flex gap-2">
+			<div class="flex gap-2 overflow-x-scroll">
+				<a class="whitespace-nowrap" href={`/channels/${data.channel.code}/all`}>All</a>
+				{#each data.boards as board}
+					<a class="whitespace-nowrap" href={`/channels/${data.channel.code}/boards/${board.code}`}
+						>{board.name}</a
+					>
+				{/each}
+			</div>
 			<div class="whitespace-nowrap" on:click={() => dialog.showModal()}>Add</div>
 		</nav>
 	</svelte:fragment>
 	<slot />
 </AppShell>
 
-<dialog bind:this={dialog} class="card" on:close><BoardForm channelCode={data.channel.code} /></dialog>
+<dialog bind:this={dialog} class="card" on:close>
+	<BoardForm channelCode={data.channel.code} />
+</dialog>

@@ -4,10 +4,11 @@
 	import { page } from '$app/stores';
 	import AppRailAvatar from './auth/AppRailAvatar.svelte';
 	import ChannelForm from '../channel/ChannelForm.svelte';
-	import FaPlus from 'svelte-icons/fa/FaPlus.svelte'
+	import type { Channel } from '@prisma/client';
+	import FaPlus from 'svelte-icons/fa/FaPlus.svelte';
 	let currentTile: number = 0;
 
-	export let channels: { name: string; code: string }[];
+	export let channels: Channel[];
 
 	let dialog: HTMLDialogElement;
 </script>
@@ -20,7 +21,10 @@
 			href={`/channels/${channel.code}/all`}
 			title={channel.name}
 		>
-			<span>{channel.name}</span>
+			<div>
+				<img class="p-4" src={channel.icon} alt="logo" />
+				<span>{channel.name}</span>
+			</div>
 		</AppRailAnchor>
 	{/each}
 	<AppRailAnchor on:click={() => dialog.showModal()}>

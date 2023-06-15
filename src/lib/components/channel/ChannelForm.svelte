@@ -1,21 +1,21 @@
 <script lang="ts">
 	let name: string;
-	let icon: string;
+	let iconUrl: string;
 	let code: string;
 
 	function addChannel() {
 		const payload = {
 			name,
-			icon,
+			icon: iconUrl,
 			code
 		};
 		fetch('/api/channels', { method: 'POST', body: JSON.stringify(payload) });
 	}
 </script>
 
-<form on:submit={addChannel}>
-	<input class="input" type="text" placeholder="name" bind:value={name} />
-	<input class="input" type="text" placeholder="iconUrl" bind:value={icon} />
-	<input class="input" type="text" placeholder="code" bind:value={code} />
+<form class="flex flex-col gap-2" on:submit={addChannel}>
+	<input class="input" type="text" placeholder="Channel Name" bind:value={name} />
+	<input class="input" type="text" placeholder="Channel Icon URL" bind:value={iconUrl} />
+	<input class="input" type="text" placeholder="Channel Code" bind:value={code} />
 	<button class="btn variant-filled" type="submit">Create Channel</button>
 </form>

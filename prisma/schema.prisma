@@ -64,6 +64,7 @@ model Channel {
   id String @id @default(cuid())
 
   name String
+  icon String
   code String
 
   boards Board[]
@@ -76,6 +77,7 @@ model Board {
   id String @id @default(cuid())
 
   name String
+  icon String
   code String
 
   channel   Channel @relation(fields: [channelId], references: [id])
