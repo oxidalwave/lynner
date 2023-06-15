@@ -10,8 +10,9 @@
 	import Header from '../components/nav/Header.svelte';
 	import SidebarLeft from '../components/nav/SidebarLeft.svelte';
 
-	/** @type {import('./$types').LayoutData} */
-	export let data;
+	import type { LayoutData } from './$types';
+
+	export let data: LayoutData;
 </script>
 
 <AppShell>
