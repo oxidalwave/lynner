@@ -1,38 +1,34 @@
-import prisma from '$lib/client.js';
-import { postValidator } from '$lib/validation/post.js';
+import { createPost } from '$lib/data/post/createPost.js';
+import { readPostsByBoard } from '$lib/data/post/readPosts.js';
+import { z } from 'zod';
+import { zx } from 'zodix';
 
 export const GET = async ({ params, url }) => {
-	const { channelCode, boardCode } = params;
+	const { channelCode, boardCode } = z
+		.object({
+			channelCode: z.string(),
+			boardCode: z.string()
+		})
+		.parse(params);
 
-	const searchParams = url.searchParams;
-
-	const sort = searchParams.get('sort') ?? 'desc';
+	const { sort, take } = zx.parseQuery(
+		url.searchParams,
+		z.object({
+			sort: z.string().default('desc'),
+			take: z.number().default(10)
+		})
+	);
 
 	if (sort !== 'asc' && sort !== 'desc') {
 		throw Error('Invalid sort');
 	}
 
-	const take = parseInt(searchParams.get('take') ?? '10');
-
-	const posts = await prisma.post.findMany({
-		where: {
-			board: {
-				code: boardCode,
-				channel: {
-					code: channelCode
-				}
-			}
-		},
-		orderBy: { createDateTime: sort },
-		take: take ?? 10
-	});
+	const posts = await readPostsByBoard(channelCode, boardCode, { sort, take });
 
 	return new Response(JSON.stringify(posts));
 };
 
-export const POST = async (event) => {
-	const { params, request, locals } = event;
-
+export const POST = async ({ params, request, locals }) => {
 	const session = await locals.getSession();
 
 	const userEmail = session?.user?.email;
@@ -43,26 +39,31 @@ export const POST = async (event) => {
 		});
 	}
 
-	const { channelCode, boardCode } = params;
+	const { channelCode, boardCode } = z
+		.object({
+			channelCode: z.string(),
+			boardCode: z.string()
+		})
+		.parse(params);
 
-	const data = postValidator.parse(await request.json());
+	const body = await request.json();
 
-	const channel = await prisma.channel.findUnique({
-		where: { code: channelCode }
-	});
+	const data = z
+		.object({
+			title: z.string(),
+			text: z.string()
+		})
+		.parse(body);
 
-	if (channel) {
-		const post = await prisma.post.create({
-			data: {
-				title: data.title,
-				text: data.text,
-				user: { connect: { email: userEmail } },
-				board: { connect: { channelId_code: { code: boardCode, channelId: channel.id } } }
-			}
-		});
+	const post = createPost(
+		{ code: channelCode },
+		{ code: boardCode },
+		{ email: userEmail },
+		{
+			title: data.title,
+			text: data.text
+		}
+	);
 
-		return new Response(JSON.stringify(post));
-	} else {
-		return new Response(JSON.stringify({}), { status: 404 });
-	}
+	return new Response(JSON.stringify(post));
 };

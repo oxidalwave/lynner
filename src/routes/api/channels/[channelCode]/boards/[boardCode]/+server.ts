@@ -1,24 +1,26 @@
 import prisma from '$lib/client.js';
+import { z } from 'zod';
 
 export const GET = async ({ params }) => {
-	const { boardCode, channelCode } = params;
+	const { boardCode, channelCode } = z
+		.object({
+			boardCode: z.string(),
+			channelCode: z.string()
+		})
+		.parse(params);
 
-	const channel = await prisma.channel.findUnique({
-		where: { code: channelCode },
-		include: {
-			boards: {
-				where: { code: boardCode }
+	const boards = await prisma.channel
+		.findUnique({
+			where: { code: channelCode },
+			include: {
+				boards: {
+					where: { code: boardCode }
+				}
 			}
-		}
-	});
+		})
+		.boards();
 
-	if (!channel) {
-		return new Response(null, { status: 404 });
-	}
-
-	const { boards } = channel;
-
-	if (boards.length > 0) {
+	if (boards && boards.length > 0) {
 		return new Response(JSON.stringify(boards[0]));
 	}
 

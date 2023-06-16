@@ -44,6 +44,7 @@
 		"@auth/sveltekit": "^0.3.3",
 		"@prisma/client": "^4.15.0",
 		"svelte-icons": "^2.1.0",
-		"zod": "^3.21.4"
+		"zod": "^3.21.4",
+		"zodix": "^0.4.1"
 	}
 }
