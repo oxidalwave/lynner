@@ -1,7 +1,18 @@
 import prisma from '$lib/client.js';
+import { postValidator } from '$lib/validation/post.js';
 
-export const GET = async ({ params }) => {
+export const GET = async ({ params, url }) => {
 	const { channelCode, boardCode } = params;
+
+	const searchParams = url.searchParams;
+
+	const sort = searchParams.get('sort') ?? 'desc';
+
+	if (sort !== 'asc' && sort !== 'desc') {
+		throw Error('Invalid sort');
+	}
+
+	const take = parseInt(searchParams.get('take') ?? '10');
 
 	const posts = await prisma.post.findMany({
 		where: {
@@ -11,7 +22,9 @@ export const GET = async ({ params }) => {
 					code: channelCode
 				}
 			}
-		}
+		},
+		orderBy: { createDateTime: sort },
+		take: take ?? 10
 	});
 
 	return new Response(JSON.stringify(posts));
@@ -32,7 +45,7 @@ export const POST = async (event) => {
 
 	const { channelCode, boardCode } = params;
 
-	const data = await request.json();
+	const data = postValidator.parse(await request.json());
 
 	const channel = await prisma.channel.findUnique({
 		where: { code: channelCode }
