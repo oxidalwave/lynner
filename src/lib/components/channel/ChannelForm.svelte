@@ -14,8 +14,8 @@
 </script>
 
 <form class="flex flex-col gap-2" on:submit={addChannel}>
-	<input class="input" type="text" placeholder="Channel Name" bind:value={name} />
-	<input class="input" type="text" placeholder="Channel Icon URL" bind:value={iconUrl} />
-	<input class="input" type="text" placeholder="Channel Code" bind:value={code} />
+	<input class="input text-white" type="text" placeholder="Channel Name" bind:value={name} />
+	<input class="input text-white" type="text" placeholder="Channel Icon URL" bind:value={iconUrl} />
+	<input class="input text-white" type="text" placeholder="Channel Code" bind:value={code} />
 	<button class="btn variant-filled" type="submit">Create Channel</button>
 </form>

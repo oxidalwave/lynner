@@ -16,8 +16,8 @@
 </script>
 
 <form class="flex flex-col gap-2" on:submit={addChannel}>
-	<input class="input" type="text" placeholder="Board Name" bind:value={name} />
-	<input class="input" type="text" placeholder="Board Icon URL" bind:value={icon} />
-	<input class="input" type="text" placeholder="Board Code" bind:value={code} />
+	<input class="input text-white" type="text" placeholder="Board Name" bind:value={name} />
+	<input class="input text-white" type="text" placeholder="Board Icon URL" bind:value={icon} />
+	<input class="input text-white" type="text" placeholder="Board Code" bind:value={code} />
 	<button class="btn variant-filled" type="submit">Create Board</button>
 </form>
