@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { AppShell } from '@skeletonlabs/skeleton';
+	import { TabGroup, Tab, TabAnchor } from '@skeletonlabs/skeleton';
 	import type { LayoutData } from './$types';
 	import BoardForm from '$lib/components/boards/BoardForm.svelte';
 
@@ -10,17 +11,15 @@
 
 <AppShell>
 	<svelte:fragment slot="pageHeader">
-		<nav class="flex gap-2">
-			<div class="flex gap-2 overflow-x-scroll">
-				<a class="whitespace-nowrap" href={`/channels/${data.channel.code}/all`}>All</a>
-				{#each data.boards as board}
-					<a class="whitespace-nowrap" href={`/channels/${data.channel.code}/boards/${board.code}`}
-						>{board.name}</a
-					>
-				{/each}
-			</div>
-			<div class="whitespace-nowrap" on:click={() => dialog.showModal()}>Add</div>
-		</nav>
+		<TabGroup>
+			<TabAnchor href={`/channels/${data.channel.code}/all`}>All</TabAnchor>
+			{#each data.boards as board}
+				<TabAnchor href={`/channels/${data.channel.code}/boards/${board.code}`}
+					>{board.name}</TabAnchor
+				>
+			{/each}
+			<TabAnchor on:click={() => dialog.showModal()}>Add</TabAnchor>
+		</TabGroup>
 	</svelte:fragment>
 	<slot />
 </AppShell>
